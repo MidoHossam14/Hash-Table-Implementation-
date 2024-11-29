@@ -3,7 +3,7 @@ package com.hashtable;
 import java.util.Objects;
 
 public class HashTable {
-     private final Entry[] table;
+    private final Entry[] table;
     private final int capacity;
     private int size;
 
@@ -26,8 +26,22 @@ public class HashTable {
         }
     }
 
-    private int hashFunction(String key) {
-        return Math.abs(key.hashCode()) % capacity;
+    private long calc_hash( String key) {
+        
+        int i, l = key.length();
+        long hash = 0;
+        for (i = 0; i < l; i++) {
+           hash += Character.getNumericValue(key.charAt(i));
+           hash += (hash << 10);
+           hash ^= (hash >> 6);
+        }
+        hash += (hash << 3) ;
+        hash ^= (hash >> 11);
+        hash += (hash << 15);
+
+        if ( hash > 0) return hash % this.capacity;
+        else return -hash % this.capacity;
+           
     }
 
     public boolean isEmpty() {
@@ -46,7 +60,7 @@ public class HashTable {
         if (isFull()) {
             System.out.println("Hash table is full");
         } else {
-            int index = hashFunction(name);
+            int index = (int)calc_hash(name);
             while (table[index] != null) {
                 index = (index + 1) % capacity;
             }
@@ -101,7 +115,7 @@ public class HashTable {
     }
 
     public void update(String name, String new_phone_number) {
-        int index = hashFunction(name);
+        int index = (int)calc_hash(name);
         while (table[index] != null && table[index].occupiedBefore) {
             if (Objects.equals(table[index].Name, name)) {
                 table[index].phoneNumber = new_phone_number;
