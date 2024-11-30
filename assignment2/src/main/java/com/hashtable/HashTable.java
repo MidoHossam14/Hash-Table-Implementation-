@@ -49,7 +49,7 @@ public class HashTable {
     }
 
     public boolean isFull() {
-        return size == capacity;
+        return size == this.capacity;
     }
 
     public int size() {
@@ -62,7 +62,7 @@ public class HashTable {
         } else {
             int index = (int)calc_hash(name);
             while (table[index] != null) {
-                index = (index + 1) % capacity;
+                index = (index + 1) % this.capacity;
             }
             table[index] = new Entry(name, phone_number);
             size++;
@@ -74,21 +74,21 @@ public class HashTable {
             System.out.println("Hash table is empty");
             return false;
         }
-        int index = Math.abs(name.hashCode() % capacity);
+        int index = Math.abs((int)calc_hash(name));
         while (table[index] != null && table[index].occupiedBefore) {
             if (table[index] != null && Objects.equals(table[index].Name, name)) {
                 System.out.println("Contact found!");
                 System.out.println("Name: " + table[index].Name + " ,Number: " + table[index].phoneNumber);
                 return true;
             }
-            index = (index + 1) % capacity;
+            index = (index + 1) % this.capacity;
         }
         System.out.println("Name not found");
         return false;
     }
 
     public void remove(String name) {
-        int index = Math.abs(name.hashCode() % capacity);
+        int index = Math.abs((int)calc_hash(name));
         boolean exist = false;
         while (table[index] != null && table[index].occupiedBefore) {
             if (Objects.equals(table[index].Name, name)) {
@@ -97,7 +97,7 @@ public class HashTable {
                 size--;
                 exist = true;
             }
-            index = (index + 1) % capacity;
+            index = (index + 1) % this.capacity;
         }
         if(!exist) System.out.println("Contact doesn't exist!");
 
@@ -105,7 +105,7 @@ public class HashTable {
 
     public void print() {
         boolean exist = false;
-        for (int i = 0; i < capacity; i++) {
+        for (int i = 0; i < this.capacity; i++) {
             if (table[i] != null) {
                 System.out.println("Name: " + table[i].Name + " ,Number :" + table[i].phoneNumber);
                 exist = true;
@@ -122,7 +122,7 @@ public class HashTable {
                 System.out.println("Contact name: " + table[index].Name + " ,Number updated to: " + table[index].phoneNumber);
                 return;
             }
-            index = (index + 1) % capacity;
+            index = (index + 1) % this.capacity;
         }
         System.out.println("Name not found!");
     }
