@@ -7,7 +7,6 @@ public class HashTable {
     private final int capacity;
     private int size;
 
-
     public HashTable(int capacity) {
         this.capacity = capacity;
         this.table = new Entry[capacity];
@@ -26,22 +25,24 @@ public class HashTable {
         }
     }
 
-    private long calc_hash( String key) {
-        
+    private long calc_hash(String key) {
+
         int i, l = key.length();
         long hash = 0;
         for (i = 0; i < l; i++) {
-           hash += Character.getNumericValue(key.charAt(i));
-           hash += (hash << 10);
-           hash ^= (hash >> 6);
+            hash += Character.getNumericValue(key.charAt(i));
+            hash += (hash << 10);
+            hash ^= (hash >> 6);
         }
-        hash += (hash << 3) ;
+        hash += (hash << 3);
         hash ^= (hash >> 11);
         hash += (hash << 15);
 
-        if ( hash > 0) return hash % this.capacity;
-        else return -hash % this.capacity;
-           
+        if (hash > 0)
+            return hash % this.capacity;
+        else
+            return -hash % this.capacity;
+
     }
 
     public boolean isEmpty() {
@@ -60,7 +61,7 @@ public class HashTable {
         if (isFull()) {
             System.out.println("Hash table is full");
         } else {
-            int index = (int)calc_hash(name);
+            int index = (int) calc_hash(name);
             while (table[index] != null) {
                 index = (index + 1) % this.capacity;
             }
@@ -74,7 +75,7 @@ public class HashTable {
             System.out.println("Hash table is empty");
             return false;
         }
-        int index = Math.abs((int)calc_hash(name));
+        int index = (int) calc_hash(name);
         while (table[index] != null && table[index].occupiedBefore) {
             if (table[index] != null && Objects.equals(table[index].Name, name)) {
                 System.out.println("Contact found!");
@@ -88,18 +89,19 @@ public class HashTable {
     }
 
     public void remove(String name) {
-        int index = Math.abs((int)calc_hash(name));
+        int index = (int) calc_hash(name);
         boolean exist = false;
         while (table[index] != null && table[index].occupiedBefore) {
             if (Objects.equals(table[index].Name, name)) {
-                System.out.println(table[index].Name + " removed from contacts!");
                 table[index] = null;
                 size--;
+                System.out.println(table[index].Name + " removed from contacts!");
                 exist = true;
             }
             index = (index + 1) % this.capacity;
         }
-        if(!exist) System.out.println("Contact doesn't exist!");
+        if (!exist)
+            System.out.println("Contact doesn't exist!");
 
     }
 
@@ -107,19 +109,21 @@ public class HashTable {
         boolean exist = false;
         for (int i = 0; i < this.capacity; i++) {
             if (table[i] != null) {
-                System.out.println("Name: " + table[i].Name + " ,Number :" + table[i].phoneNumber);
+                System.out.println("Name: " + table[i].Name + ", Number :" + table[i].phoneNumber);
                 exist = true;
             }
         }
-        if(!exist) System.out.println("No contacts in the list!");
+        if (!exist)
+            System.out.println("No contacts in the list!");
     }
 
     public void update(String name, String new_phone_number) {
-        int index = (int)calc_hash(name);
+        int index = (int) calc_hash(name);
         while (table[index] != null && table[index].occupiedBefore) {
             if (Objects.equals(table[index].Name, name)) {
                 table[index].phoneNumber = new_phone_number;
-                System.out.println("Contact name: " + table[index].Name + " ,Number updated to: " + table[index].phoneNumber);
+                System.out.println(
+                        "Contact name: " + table[index].Name + ", Number updated to: " + table[index].phoneNumber);
                 return;
             }
             index = (index + 1) % this.capacity;
