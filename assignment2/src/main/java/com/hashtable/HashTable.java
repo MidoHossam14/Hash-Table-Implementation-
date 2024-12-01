@@ -95,13 +95,13 @@ public class HashTable {
             if (Objects.equals(table[index].Name, name)) {
                 table[index] = null;
                 size--;
-                System.out.println(table[index].Name + " removed from contacts!");
+                System.out.println( name + " is removed from contacts !");
                 exist = true;
             }
             index = (index + 1) % this.capacity;
         }
         if (!exist)
-            System.out.println("Contact doesn't exist!");
+            System.out.println("Contact is not exist !");
 
     }
 

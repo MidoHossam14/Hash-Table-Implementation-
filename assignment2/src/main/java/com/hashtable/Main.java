@@ -19,5 +19,9 @@ public class Main {
         table.insert("Hamada k", "01222");
 
         table.print();
+
+        table.remove("Hamada k");
+
+        table.print();
     }
 }
