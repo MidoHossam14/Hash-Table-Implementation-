@@ -2,25 +2,31 @@ package com.hashtable;
 
 import java.util.Objects;
 
-public class CustomHashMap {
+public class HashTable {
 
-    public static Entry[] table = new Entry[1009];
-    private static int tableCapacity = table.length;
-    private static int currentElementCount = 0;
+    public final Entry[] table ; 
+    private final int Capacity ;
+    private  int size ;
+
+    public HashTable(int capacity) {
+        this.Capacity = capacity;
+        this.table = new Entry[capacity];
+        this.size = 0;
+    }
 
     public static class Entry {
         String key;
-        String value;
+        String phoneNumber;
         boolean isOccupied;
 
-        public Entry(String key, String value) {
+        public Entry(String key, String phoneNumber) {
             this.key = key;
-            this.value = value;
+            this.phoneNumber = phoneNumber;
             this.isOccupied = true;
         }
     }
 
-    private static long computeHashValue(String key) {
+    private long calc_hash(String key) {
         int keyLength = key.length();
         long hash = 0;
         for (int i = 0; i < keyLength; i++) {
@@ -31,89 +37,90 @@ public class CustomHashMap {
         hash += (hash << 3);
         hash ^= (hash >> 11);
         hash += (hash << 15);
-        return (hash > 0) ? hash % tableCapacity : -hash % tableCapacity;
+
+        return (hash > 0) ? hash % Capacity : -hash % Capacity;
     }
 
-    public static boolean isTableEmpty() {
-        return currentElementCount == 0;
+    public boolean isTableEmpty() {
+        return size == 0;
     }
 
-    public static boolean isTableFull() {
-        return currentElementCount == tableCapacity;
+    public boolean isTableFull() {
+        return size == Capacity;
     }
 
-    public static boolean insertEntry(String key, String value) {
+    public boolean insertEntry(String key, String PhoneNumber) {
         if (!isTableFull()) {
-            int index = (int) computeHashValue(key);
+            int index = (int) calc_hash(key);
             while (table[index] != null && table[index].isOccupied) {
-                index = (index + 1) % tableCapacity;
+                index = (index + 1) % Capacity;
             }
-            table[index] = new Entry(key, String.valueOf(value));
-            currentElementCount++;
+            table[index] = new Entry(key, String.valueOf(PhoneNumber));
+            size++;
             return true;
         }
         return false;
     }
 
-    public static boolean removeEntry(String key) {
-        int index = (int) computeHashValue(key);
+    public boolean removeEntry(String key) {
+        int index = (int) calc_hash(key);
         while (table[index] != null && table[index].isOccupied) {
             if (Objects.equals(table[index].key, key)) {
                 table[index].isOccupied = false;
-                currentElementCount--;
+                size--;
                 return true;
             }
-            index = (index + 1) % tableCapacity;
+            index = (index + 1) % Capacity;
         }
         return false;
     }
 
-    public static String searchEntry(String key) {
+    public String searchEntry(String key) {
         if (!isTableEmpty()) {
-            int index = (int) computeHashValue(key);
+            int index = (int) calc_hash(key);
             while (table[index] != null && table[index].isOccupied) {
                 if (Objects.equals(table[index].key, key)) {
-                    return table[index].value;
+                    return table[index].phoneNumber;
                 }
-                index = (index + 1) % tableCapacity;
+                index = (index + 1) % Capacity;
             }
         }
         return null;
     }
 
-    public static boolean updateEntry(String key, String newValue) {
-        int index = (int) computeHashValue(key);
+    public boolean updateEntry(String key, String newPhoneNumber) {
+        int index = (int) calc_hash(key);
         while (table[index] != null && table[index].isOccupied) {
             if (Objects.equals(table[index].key, key)) {
-                table[index].value = newValue;
+                table[index].phoneNumber = newPhoneNumber;
                 return true;
             }
-            index = (index + 1) % tableCapacity;
+            index = (index + 1) % Capacity;
         }
         return false;
     }
 
-    public static String printTable() {
+    public String printTable() {
         StringBuilder tableContents = new StringBuilder();
-        for (int i = 0; i < tableCapacity; i++) {
+        for (int i = 0; i < Capacity; i++) {
             if (table[i] != null && table[i].isOccupied) {
                 tableContents.append("Index ").append(i)
                         .append(": Key = ").append(table[i].key)
-                        .append(", Value = ").append(table[i].value)
+                        .append(", Value = ").append(table[i].phoneNumber)
                         .append("\n");
             }
         }
         return tableContents.toString();
     }
 
-    public static Object[][] getTableData() {
-        Object[][] data = new Object[currentElementCount][3];
+    public Object[][] getTableData() {
+        Object[][] data = new Object[size][3];
         int index = 0;
-        for (int i = 0; i < tableCapacity; i++) {
+        for (int i = 0; i < Capacity; i++) {
             if (table[i] != null && table[i].isOccupied) {
                 data[index][0] = i;
                 data[index][1] = table[i].key;
-                data[index][2] = table[i].value;
+                data[index][2] = table[i].phoneNumber;
                 index++;
             }
         }

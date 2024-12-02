@@ -1,11 +1,24 @@
 package com.hashtable;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.geom.RoundRectangle2D;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class Main {
     public static void main(String[] args) {
+
+        // To work without static key word and to keep functionality of create other tables dynamically.
+        HashTable Table = new HashTable(1009);
+
         JFrame frame = new JFrame();
         frame.setSize(854, 480);
         frame.setLayout(null);
@@ -75,8 +88,8 @@ public class Main {
                 if (!name2.getText().isEmpty() && !phoneNumber2.getText().isEmpty()) {
                     String name = name2.getText();
                     String phoneNumber = phoneNumber2.getText();
-                    if (CustomHashMap.insertEntry(name, phoneNumber)) {
-                        message.setText(name + " successfully Inserted");
+                    if (Table.insertEntry(name, phoneNumber)) {
+                        message.setText(name + " is successfully Inserted");
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
@@ -109,14 +122,14 @@ public class Main {
             removeButton.addActionListener(e1 -> {
                 if (!name2.getText().isEmpty()) {
                     String name = name2.getText();
-                    if (CustomHashMap.removeEntry(name)) {
-                        message.setText(name + " successfully Removed");
+                    if (Table.removeEntry(name)) {
+                        message.setText(name + " is successfully Removed");
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
                         output.repaint();
                     } else {
-                        message.setText("Entry not found");
+                        message.setText("Contact is not found");
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
@@ -145,14 +158,14 @@ public class Main {
                 if (!name2.getText().isEmpty() && !phoneNumber2.getText().isEmpty()) {
                     String name = name2.getText();
                     String phoneNumber = phoneNumber2.getText();
-                    if (CustomHashMap.updateEntry(name, phoneNumber)) {
+                    if (Table.updateEntry(name, phoneNumber)) {
                         message.setText(name + " updated");
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
                         output.repaint();
                     } else {
-                        message.setText("Entry not found");
+                        message.setText("Contact is not found");
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
@@ -179,14 +192,14 @@ public class Main {
             searchButton.addActionListener(e1 -> {
                 if (!name2.getText().isEmpty()) {
                     String name = name2.getText();
-                    if (CustomHashMap.searchEntry(name) != null) {
-                        message.setText("Phone Number of " + name + " is " + CustomHashMap.searchEntry(name));
+                    if (Table.searchEntry(name) != null) {
+                        message.setText("Phone Number of " + name + " is " + Table.searchEntry(name));
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
                         output.repaint();
                     } else {
-                        message.setText("Entry not found");
+                        message.setText("Contact is not found");
                         message.setBounds(output.getWidth() / 6, message.getPreferredSize().height,
                                 message.getPreferredSize().width, message.getPreferredSize().height);
                         output.add(message);
@@ -202,7 +215,7 @@ public class Main {
 
         print.addActionListener(e -> {
             frame.setVisible(false);
-            Object[][] data = CustomHashMap.getTableData();
+            Object[][] data = Table.getTableData();
             String[] columns = { "Index", "Key", "Value" };
             JFrame newFrame = new JFrame();
             newFrame.setSize(frame.getWidth(), frame.getHeight());
@@ -227,17 +240,18 @@ public class Main {
             newHeader.add(close);
             newFrame.add(newHeader);
 
-            JTable table = new JTable(data, columns) {
+            // Mohamed Hossam Editing : dispaly instead of table
+            JTable display = new JTable(data, columns) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
-            table.setFont(new Font("MV Boli", Font.PLAIN, 14));
-            table.setRowHeight(30);
-            table.setFillsViewportHeight(true);
-            table.setBackground(Color.LIGHT_GRAY);
-            JScrollPane scrollPane = new JScrollPane(table);
+            display.setFont(new Font("MV Boli", Font.PLAIN, 14));
+            display.setRowHeight(30);
+            display.setFillsViewportHeight(true);
+            display.setBackground(Color.LIGHT_GRAY);
+            JScrollPane scrollPane = new JScrollPane(display);
             scrollPane.setBounds(10, 50, newFrame.getWidth() - 20, newFrame.getHeight() - 60);
             newFrame.add(scrollPane);
             newFrame.repaint();
