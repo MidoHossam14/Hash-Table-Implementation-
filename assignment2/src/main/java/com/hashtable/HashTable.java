@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class HashTable {
 
-    public final Entry[] table ; 
-    private final int Capacity ;
-    private  int size ;
+    public final Entry[] table;
+    private final int Capacity;
+    private int size;
 
     public HashTable(int capacity) {
         this.Capacity = capacity;
@@ -100,30 +100,32 @@ public class HashTable {
         return false;
     }
 
-    public String printTable() {
-        StringBuilder tableContents = new StringBuilder();
-        for (int i = 0; i < Capacity; i++) {
-            if (table[i] != null && table[i].isOccupied) {
-                tableContents.append("Index ").append(i)
-                        .append(": Key = ").append(table[i].key)
-                        .append(", Value = ").append(table[i].phoneNumber)
-                        .append("\n");
-            }
-        }
-        return tableContents.toString();
-    }
-
     public Object[][] getTableData() {
         Object[][] data = new Object[size][3];
         int index = 0;
         for (int i = 0; i < Capacity; i++) {
             if (table[i] != null && table[i].isOccupied) {
-                data[index][0] = i;
-                data[index][1] = table[i].key;
-                data[index][2] = table[i].phoneNumber;
+                data[index][0] = table[i].key;
+                data[index][1] = i;
+                data[index][2] = table[i].key + " - " + table[i].phoneNumber;
                 index++;
             }
         }
         return data;
     }
+
+    /*
+     * public String printTable() {
+     * StringBuilder tableContents = new StringBuilder();
+     * for (int i = 0; i < Capacity; i++) {
+     * if (table[i] != null && table[i].isOccupied) {
+     * tableContents.append("Index ").append(i)
+     * .append(": Key = ").append(table[i].key)
+     * .append(", Value = ").append(table[i].phoneNumber)
+     * .append("\n");
+     * }
+     * }
+     * return tableContents.toString();
+     * }
+     */
 }
