@@ -84,6 +84,7 @@ public class HashTable {
 
     public boolean removeEntry(String key) {
         int index = (int) calc_hash(key);
+<<<<<<< HEAD
         int originalIndex = index; // To detect a full cycle
     
         while (table[index] != null) {
@@ -100,15 +101,30 @@ public class HashTable {
                         size--; // Temporarily reduce size for reinsertion
                         insertEntry(rehashEntry.key, rehashEntry.phoneNumber);
                         nextIndex = (nextIndex + 1) % Capacity;
+=======
+        boolean reOrder = false;
+        while (table[index] != null && table[index].isOccupied) {
+            if (Objects.equals(table[index].key, key)) {
+                table[index].isOccupied = false;
+                size--;
+                if (reOrder) {
+                    while (table[index] != null && (int) calc_hash(table[index].key) == (int) calc_hash(key)) {
+                        table[index] = table[index + 1];
+                        index = (index + 1) % Capacity;
+>>>>>>> 3ba19a0b7d0d50193bceb10c37f842cef1e6768d
                     }
                 }
                 return true;
             }
             index = (index + 1) % Capacity;
+<<<<<<< HEAD
             if (index == originalIndex) {
                 // We've looped back to the start; exit to prevent infinite loops
                 break;
             }
+=======
+            reOrder = true;
+>>>>>>> 3ba19a0b7d0d50193bceb10c37f842cef1e6768d
         }
         return false;
     }
