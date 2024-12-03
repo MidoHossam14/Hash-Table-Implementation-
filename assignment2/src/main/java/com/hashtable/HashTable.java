@@ -91,34 +91,25 @@ public class HashTable {
                 // Mark the entry as not occupied
                 table[index].isOccupied = false;
                 size--;
-    
                 // Rehash elements in the cluster
                 int nextIndex = (index + 1) % Capacity;
-
                 if( table[nextIndex] != null ){
-                    // if(calc_hash(table[index].key) != calc_hash(table[nextIndex].key))
-                        while (table[nextIndex] != null && table[nextIndex].isOccupied) {
-                            Entry rehashEntry = table[nextIndex];
-                            table[nextIndex] = null;
-                            size--; // Temporarily reduce size for reinsertion
-    
-                            insertEntry(rehashEntry.key, rehashEntry.phoneNumber);
-                            nextIndex = (nextIndex + 1) % Capacity;
-                        
+                    while (table[nextIndex] != null && table[nextIndex].isOccupied) {
+                        Entry rehashEntry = table[nextIndex];
+                        table[nextIndex] = null;
+                        size--; // Temporarily reduce size for reinsertion
+                        insertEntry(rehashEntry.key, rehashEntry.phoneNumber);
+                        nextIndex = (nextIndex + 1) % Capacity;
                     }
                 }
-    
                 return true;
             }
-    
             index = (index + 1) % Capacity;
-    
             if (index == originalIndex) {
                 // We've looped back to the start; exit to prevent infinite loops
                 break;
             }
         }
-    
         return false;
     }
     
