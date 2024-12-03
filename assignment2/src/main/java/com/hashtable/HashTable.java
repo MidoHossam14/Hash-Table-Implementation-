@@ -64,13 +64,21 @@ public class HashTable {
 
     public boolean removeEntry(String key) {
         int index = (int) calc_hash(key);
+        boolean reOrder = false;
         while (table[index] != null && table[index].isOccupied) {
             if (Objects.equals(table[index].key, key)) {
                 table[index].isOccupied = false;
                 size--;
+                if (reOrder) {
+                    while (table[index] != null && (int) calc_hash(table[index].key) == (int) calc_hash(key)) {
+                        table[index] = table[index + 1];
+                        index = (index + 1) % Capacity;
+                    }
+                }
                 return true;
             }
             index = (index + 1) % Capacity;
+            reOrder = true;
         }
         return false;
     }
