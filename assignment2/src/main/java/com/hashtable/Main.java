@@ -1,17 +1,27 @@
 package com.hashtable;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 
-import java.awt.event.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class Main {
     public static void main(String[] args) {
-        // To work without static key word and to keep functionality of create other
-        // tables dynamically.
+        
         HashTable Table = new HashTable(1009);
+
         Table.insertEntry("Amr", "23011400");
         Table.insertEntry("Yasser", "23011507");
         Table.insertEntry("Hossam", "23011471");
@@ -225,7 +235,6 @@ public class Main {
             newHeader.add(close);
             newFrame.add(newHeader);
 
-            // Mohamed Hossam Editing : dispaly instead of table
             JTable display = new JTable(data, columns) {
                 @Override
                 public boolean isCellEditable(int row, int column) {

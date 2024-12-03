@@ -62,18 +62,66 @@ public class HashTable {
         return false;
     }
 
+    /*
+     I will not use this function for many reasons 
+        1. in many collisions the search method will be affected .
+        2. when using open addressing methods we have to rehash our table to avoid mistakes in the search
+        3. عشان فادي ميبهدلناش :) .
+     */
+
+    // public boolean removeEntry(String key) {
+    //     int index = (int) calc_hash(key);
+    //     while (table[index] != null && table[index].isOccupied) {
+    //         if (Objects.equals(table[index].key, key)) {
+    //             table[index].isOccupied = false;
+    //             size--;
+    //             return true;
+    //         }
+    //         index = (index + 1) % Capacity;
+    //     }
+    //     return false;
+    // }
+
     public boolean removeEntry(String key) {
         int index = (int) calc_hash(key);
-        while (table[index] != null && table[index].isOccupied) {
-            if (Objects.equals(table[index].key, key)) {
+        int originalIndex = index; // To detect a full cycle
+    
+        while (table[index] != null) {
+            if (table[index].isOccupied && Objects.equals(table[index].key, key)) {
+                // Mark the entry as not occupied
                 table[index].isOccupied = false;
                 size--;
+    
+                // Rehash elements in the cluster
+                int nextIndex = (index + 1) % Capacity;
+
+                if( table[nextIndex] != null ){
+                    // if(calc_hash(table[index].key) != calc_hash(table[nextIndex].key))
+                        while (table[nextIndex] != null && table[nextIndex].isOccupied) {
+                            Entry rehashEntry = table[nextIndex];
+                            table[nextIndex] = null;
+                            size--; // Temporarily reduce size for reinsertion
+    
+                            insertEntry(rehashEntry.key, rehashEntry.phoneNumber);
+                            nextIndex = (nextIndex + 1) % Capacity;
+                        
+                    }
+                }
+    
                 return true;
             }
+    
             index = (index + 1) % Capacity;
+    
+            if (index == originalIndex) {
+                // We've looped back to the start; exit to prevent infinite loops
+                break;
+            }
         }
+    
         return false;
     }
+    
 
     public String searchEntry(String key) {
         if (!isTableEmpty()) {
