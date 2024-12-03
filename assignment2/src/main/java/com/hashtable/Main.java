@@ -19,13 +19,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class Main {
     public static void main(String[] args) {
-        
-        HashTable Table = new HashTable(1009);
 
-        Table.insertEntry("Amr", "23011400");
-        Table.insertEntry("Yasser", "23011507");
-        Table.insertEntry("Hossam", "23011471");
-        Table.insertEntry("Moaz", "23011552");
+        HashTable Table = new HashTable(1009);
 
         JFrame frame = new JFrame();
         frame.setSize(854, 480);
@@ -37,44 +32,44 @@ public class Main {
         frame.setShape(new RoundRectangle2D.Double(0, 0, frame.getWidth(), frame.getHeight(), 20, 20));
 
         JPanel header = new JPanel();
-        header.setBackground(new Color(30, 30, 30));
+        header.setBackground(new Color(34, 85, 44));
         header.setBounds(0, 0, 854, 30);
         header.setLayout(null);
 
         JPanel input = new JPanel();
-        input.setBackground(new Color(60, 60, 60));
+        input.setBackground(new Color(239, 240, 232));
         input.setBounds(0, 30, 412, 450);
         input.setLayout(null);
 
         JPanel output = new JPanel();
-        output.setBackground(new Color(60, 60, 60));
+        output.setBackground(new Color(239, 240, 232));
         output.setBounds(input.getWidth() + 1, 30, 441, 450);
         output.setLayout(null);
-        JTextField message = createTextField(Color.WHITE, output.getBackground());
+        JTextField message = createTextField(Color.BLACK, output.getBackground());
         message.setEditable(false);
         message.setBorder(null);
 
-        JButton insert = createButton("Insert", header.getBackground(), Color.LIGHT_GRAY);
+        JButton insert = createButton("Insert", header.getBackground(), new Color(184, 218, 186));
         insert.setBounds(0, 0, insert.getPreferredSize().width, 30);
-        JButton remove = createButton("Remove", header.getBackground(), Color.LIGHT_GRAY);
+        JButton remove = createButton("Remove", header.getBackground(), new Color(184, 218, 186));
         remove.setBounds(insert.getWidth(), 0, remove.getPreferredSize().width, 30);
-        JButton update = createButton("Update", header.getBackground(), Color.LIGHT_GRAY);
+        JButton update = createButton("Update", header.getBackground(), new Color(184, 218, 186));
         update.setBounds(remove.getX() + remove.getWidth(), 0, update.getPreferredSize().width, 30);
-        JButton search = createButton("Search", header.getBackground(), Color.LIGHT_GRAY);
+        JButton search = createButton("Search", header.getBackground(), new Color(184, 218, 186));
         search.setBounds(update.getX() + update.getWidth(), 0, search.getPreferredSize().width, 30);
-        JButton print = createButton("Print", header.getBackground(), Color.LIGHT_GRAY);
+        JButton print = createButton("Print", header.getBackground(), new Color(184, 218, 186));
         print.setBounds(search.getX() + search.getWidth(), 0, print.getPreferredSize().width, 30);
-        JButton exit = createButton("X", header.getBackground(), Color.RED);
+        JButton exit = createButton("X", header.getBackground(), new Color(212, 62, 62));
         exit.setBounds(809, 0, 45, 30);
 
         JLabel name1 = createLabel("Name");
         name1.setBounds(116, 90, 43, 27);
-        JTextField name2 = createTextField(Color.LIGHT_GRAY, output.getBackground());
+        JTextField name2 = createTextField(Color.BLACK, output.getBackground());
         name2.setBounds(206, 90, 150, 27);
 
         JLabel phoneNumber1 = createLabel("Phone Number");
         phoneNumber1.setBounds(81, 167, 113, 27);
-        JTextField phoneNumber2 = createTextField(Color.LIGHT_GRAY, output.getBackground());
+        JTextField phoneNumber2 = createTextField(Color.BLACK, output.getBackground());
         phoneNumber2.setBounds(206, 167, 150, 27);
 
         insert.addActionListener(e -> {
@@ -85,7 +80,7 @@ public class Main {
             input.add(name2);
             input.add(phoneNumber1);
             input.add(phoneNumber2);
-            JButton insertButton = createButton("Insert", header.getBackground(), Color.LIGHT_GRAY);
+            JButton insertButton = createButton("Insert", header.getBackground(), new Color(184, 218, 186));
             insertButton.setBounds(101, 300, 250, 37);
             insertButton.addActionListener(e1 -> {
                 if (!name2.getText().isEmpty() && !phoneNumber2.getText().isEmpty()) {
@@ -117,7 +112,7 @@ public class Main {
             output.repaint();
             input.add(name1);
             input.add(name2);
-            JButton removeButton = createButton("Remove", header.getBackground(), Color.LIGHT_GRAY);
+            JButton removeButton = createButton("Remove", header.getBackground(), new Color(184, 218, 186));
             removeButton.setBounds((input.getWidth() / 2) - 105, input.getHeight() * 2 / 3, 250,
                     removeButton.getPreferredSize().height);
             removeButton.addActionListener(e1 -> {
@@ -150,7 +145,7 @@ public class Main {
             input.add(name2);
             input.add(phoneNumber1);
             input.add(phoneNumber2);
-            JButton updateButton = createButton("Update", header.getBackground(), Color.LIGHT_GRAY);
+            JButton updateButton = createButton("Update", header.getBackground(), new Color(184, 218, 186));
             updateButton.setBounds((input.getWidth() / 2) - 105, input.getHeight() * 2 / 3, 250,
                     updateButton.getPreferredSize().height);
             updateButton.addActionListener(e1 -> {
@@ -183,7 +178,7 @@ public class Main {
             output.repaint();
             input.add(name1);
             input.add(name2);
-            JButton searchButton = createButton("Search", header.getBackground(), Color.LIGHT_GRAY);
+            JButton searchButton = createButton("Search", header.getBackground(), new Color(184, 218, 186));
             searchButton.setBounds((input.getWidth() / 2) - 105, input.getHeight() * 2 / 3, 250,
                     searchButton.getPreferredSize().height);
             searchButton.addActionListener(e1 -> {
@@ -225,7 +220,7 @@ public class Main {
             newHeader.setBackground(header.getBackground());
             newHeader.setBounds(0, 0, newFrame.getWidth(), 30);
             newHeader.setLayout(null);
-            JButton close = createButton("X", header.getBackground(), Color.RED);
+            JButton close = createButton("X", header.getBackground(), new Color(212, 62, 62));
             close.setBounds(newFrame.getWidth() - close.getPreferredSize().width, 0, close.getPreferredSize().width,
                     newHeader.getHeight());
             close.addActionListener(e1 -> {
@@ -292,7 +287,7 @@ public class Main {
     public static JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("MV Boli", Font.PLAIN, 16));
-        label.setForeground(Color.WHITE);
+        label.setForeground(Color.BLACK);
         return label;
     }
 

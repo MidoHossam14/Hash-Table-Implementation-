@@ -84,57 +84,48 @@ public class HashTable {
 
     public boolean removeEntry(String key) {
         int index = (int) calc_hash(key);
-<<<<<<< HEAD
         int originalIndex = index; // To detect a full cycle
-    
+
         while (table[index] != null) {
-            if (table[index].isOccupied && Objects.equals(table[index].key, key)) {
+            if (table[index].isOccupied && table[index].key.equalsIgnoreCase(key)) {
                 // Mark the entry as not occupied
                 table[index].isOccupied = false;
                 size--;
+
                 // Rehash elements in the cluster
                 int nextIndex = (index + 1) % Capacity;
-                if( table[nextIndex] != null ){
+
+                if (table[nextIndex] != null) {
                     while (table[nextIndex] != null && table[nextIndex].isOccupied) {
-                        Entry rehashEntry = table[nextIndex];
+                        Entry reHashEntry = table[nextIndex];
                         table[nextIndex] = null;
                         size--; // Temporarily reduce size for reinsertion
-                        insertEntry(rehashEntry.key, rehashEntry.phoneNumber);
+
+                        insertEntry(reHashEntry.key, reHashEntry.phoneNumber);
                         nextIndex = (nextIndex + 1) % Capacity;
-=======
-        boolean reOrder = false;
-        while (table[index] != null && table[index].isOccupied) {
-            if (Objects.equals(table[index].key, key)) {
-                table[index].isOccupied = false;
-                size--;
-                if (reOrder) {
-                    while (table[index] != null && (int) calc_hash(table[index].key) == (int) calc_hash(key)) {
-                        table[index] = table[index + 1];
-                        index = (index + 1) % Capacity;
->>>>>>> 3ba19a0b7d0d50193bceb10c37f842cef1e6768d
                     }
                 }
+
                 return true;
             }
+
             index = (index + 1) % Capacity;
-<<<<<<< HEAD
+
             if (index == originalIndex) {
                 // We've looped back to the start; exit to prevent infinite loops
                 break;
             }
-=======
-            reOrder = true;
->>>>>>> 3ba19a0b7d0d50193bceb10c37f842cef1e6768d
         }
+
         return false;
     }
-    
+
 
     public String searchEntry(String key) {
         if (!isTableEmpty()) {
             int index = (int) calc_hash(key);
             while (table[index] != null && table[index].isOccupied) {
-                if (Objects.equals(table[index].key, key)) {
+                if (table[index].key.equalsIgnoreCase(key)) {
                     return table[index].phoneNumber;
                 }
                 index = (index + 1) % Capacity;
@@ -146,7 +137,7 @@ public class HashTable {
     public boolean updateEntry(String key, String newPhoneNumber) {
         int index = (int) calc_hash(key);
         while (table[index] != null && table[index].isOccupied) {
-            if (Objects.equals(table[index].key, key)) {
+            if (table[index].key.equalsIgnoreCase(key)) {
                 table[index].phoneNumber = newPhoneNumber;
                 return true;
             }
