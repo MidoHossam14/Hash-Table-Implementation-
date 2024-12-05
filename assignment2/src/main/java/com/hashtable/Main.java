@@ -22,6 +22,19 @@ public class Main {
 
         HashTable Table = new HashTable(1009);
 
+        Table.insertEntry("Amr", "23011400");
+        Table.insertEntry("Yasser", "23011507");
+        Table.insertEntry("Hossam", "23011471");
+        Table.insertEntry("Moaz", "23011552");
+        Table.insertEntry("Jamal", "23011000");
+        Table.insertEntry("Belal", "01025478");
+
+        Table.updateEntry("Jamal", "01204578");
+
+        Table.removeEntry("Belal");
+
+        
+
         JFrame frame = new JFrame();
         frame.setSize(854, 480);
         frame.setLayout(null);

@@ -1,7 +1,5 @@
 package com.hashtable;
 
-import java.util.Objects;
-
 public class HashTable {
 
     public final Entry[] table;
@@ -61,26 +59,6 @@ public class HashTable {
         }
         return false;
     }
-
-    /*
-     I will not use this function for many reasons 
-        1. in many collisions the search method will be affected .
-        2. when using open addressing methods we have to rehash our table to avoid mistakes in the search
-        3. عشان فادي ميبهدلناش :) .
-     */
-
-    // public boolean removeEntry(String key) {
-    //     int index = (int) calc_hash(key);
-    //     while (table[index] != null && table[index].isOccupied) {
-    //         if (Objects.equals(table[index].key, key)) {
-    //             table[index].isOccupied = false;
-    //             size--;
-    //             return true;
-    //         }
-    //         index = (index + 1) % Capacity;
-    //     }
-    //     return false;
-    // }
 
     public boolean removeEntry(String key) {
         int index = (int) calc_hash(key);
@@ -160,18 +138,5 @@ public class HashTable {
         return data;
     }
 
-    /*
-     * public String printTable() {
-     * StringBuilder tableContents = new StringBuilder();
-     * for (int i = 0; i < Capacity; i++) {
-     * if (table[i] != null && table[i].isOccupied) {
-     * tableContents.append("Index ").append(i)
-     * .append(": Key = ").append(table[i].key)
-     * .append(", Value = ").append(table[i].phoneNumber)
-     * .append("\n");
-     * }
-     * }
-     * return tableContents.toString();
-     * }
-     */
+    
 }
