@@ -102,11 +102,16 @@ public class HashTable {
     public String searchEntry(String key) {
         if (!isTableEmpty()) {
             int index = (int) calc_hash(key);
+            // To avoid infinity loop if the table is full.
+            int originalIndex = index;
             while (table[index] != null && table[index].isOccupied) {
                 if (table[index].key.equalsIgnoreCase(key)) {
                     return table[index].phoneNumber;
                 }
                 index = (index + 1) % Capacity;
+                // Break the loop 
+                if ( index == originalIndex)
+                    break ;
             }
         }
         return null;
@@ -114,12 +119,16 @@ public class HashTable {
 
     public boolean updateEntry(String key, String newPhoneNumber) {
         int index = (int) calc_hash(key);
+        // To avoid infinity loop if the table is full.
+        int originalIndex = index;
         while (table[index] != null && table[index].isOccupied) {
             if (table[index].key.equalsIgnoreCase(key)) {
                 table[index].phoneNumber = newPhoneNumber;
                 return true;
             }
             index = (index + 1) % Capacity;
+            if ( index == originalIndex)
+                    break ;
         }
         return false;
     }
